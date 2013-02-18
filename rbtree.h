@@ -42,6 +42,7 @@ enum {
     false   = 0,
     true    = 1
 };
+
 struct rb_node {
 	unsigned long  __rb_parent_color;
 	struct rb_node *rb_right;
@@ -53,15 +54,7 @@ struct rb_root {
 	struct rb_node *rb_node;
 };
 
-struct rb_augment_callbacks {
-    void (*propagate)(struct rb_node *node, struct rb_node *stop);
-    void (*copy)(struct rb_node *old, struct rb_node *new);
-    void (*rotate)(struct rb_node *old, struct rb_node *new);
-};
-
-
 #define __rb_parent(pc)    ((struct rb_node *)(pc & ~3))
-
 #define __rb_color(pc)     ((pc) & 1)
 #define __rb_is_black(pc)  __rb_color(pc)
 #define __rb_is_red(pc)    (!__rb_color(pc))
@@ -93,12 +86,10 @@ __rb_change_child(struct rb_node *old, struct rb_node *new,
         root->rb_node = new;
 }
 
-extern void __rb_erase_color(struct rb_node *parent, struct rb_root *root,
-    void (*augment_rotate)(struct rb_node *old, struct rb_node *new));
+extern void __rb_erase_color(struct rb_node *parent, struct rb_root *root);
 
 static __always_inline void
-rb_erase_augmented(struct rb_node *node, struct rb_root *root,
-           const struct rb_augment_callbacks *augment)
+__rb_erase(struct rb_node *node, struct rb_root *root)
 {
     struct rb_node *child = node->rb_right, *tmp = node->rb_left;
     struct rb_node *parent, *rebalance;
@@ -143,7 +134,6 @@ rb_erase_augmented(struct rb_node *node, struct rb_root *root,
              */
             parent = successor;
             child2 = successor->rb_right;
-            augment->copy(node, successor);
         } else {
             /*
              * Case 3: node's successor is leftmost under
@@ -167,8 +157,6 @@ rb_erase_augmented(struct rb_node *node, struct rb_root *root,
             parent->rb_left = child2 = successor->rb_right;
             successor->rb_right = child;
             rb_set_parent(child, successor);
-            augment->copy(node, successor);
-            augment->propagate(parent, successor);
         }
 
         successor->rb_left = tmp = node->rb_left;
@@ -189,9 +177,8 @@ rb_erase_augmented(struct rb_node *node, struct rb_root *root,
         tmp = successor;
     }
 
-    augment->propagate(tmp, NULL);
     if (rebalance)
-        __rb_erase_color(rebalance, root, augment->rotate);
+        __rb_erase_color(rebalance, root);
 }
 
 #define rb_parent(r)   ((struct rb_node *)((r)->__rb_parent_color & ~3))
