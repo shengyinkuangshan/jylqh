@@ -267,6 +267,8 @@ expand_var(){
     echo "$v"
 }
 
+## Here is begin ##
+
 # set temporary file name
 if test ! -z "$TMPDIR" ; then
     TMPDIR1="${TMPDIR}"
@@ -458,7 +460,9 @@ fi
 if test "$logging" != no; then
   enabled logging || logfile="$logging"
   echo "# $0 $@" >$logfile
+  echo '===============-------------------------------============' >>$logfile
   set >>$logfile
+  echo '===============-------------------------------============' >>$logfile
 else
   logfile=/dev/null
 fi
