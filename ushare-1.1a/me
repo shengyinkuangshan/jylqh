@@ -1,8 +1,19 @@
-./configure --enable-debug --prefix=/home/dongxyc/Downloads/Lib_libupnp
+$ cd jylqh/libupnp-1.6.6
+$ ./configure --enable-debug --prefix=${PWD}/install_upnp
+$ make && make install
 
-./configure --enable-developer --enable-debug --disable-strip --prefix=/home/dongxy/Downloads/libdlna-0.2.4/xdong
+$ cd jylqh/libdlna-0.2.4
+$ ./configure --enable-developer --enable-debug --disable-strip --prefix=/home/dongxy/Downloads/libdlna-0.2.4/xdong
+$ make && make install
 
-./configure --enable-debug --disable-strip --disable-dlna --disable-optimize --disable-nls --prefix=/home/dongxyc/jylqh/ushare-1.1a/install_xdong
+$ cd jylqh/ushare-1.1a
+$ export PKG_CONFIG_PATH=/home/dongxy/Downloads/jylqh/libupnp-1.6.6:$PKG_CONFIG_PATH
+$ ./configure --enable-debug --disable-strip --disable-dlna --disable-optimize --disable-nls --prefix=${PWD}/install_ushare
+$ ./configure --enable-debug --disable-strip --disable-dlna --disable-optimize --disable-nls --prefix=${PWD}/install_ushare --with-libupnp-dir=${PWD}/../libupnp-1.6.6/install_upnp
+$ make && make install
 
 $git commit -m 'add dlna 0.2.4 and upnp 1.6.6'
 $ git push -u origin master
+
+git push origin master
+git pull origin  master
