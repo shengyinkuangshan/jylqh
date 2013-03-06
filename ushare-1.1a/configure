@@ -460,9 +460,9 @@ fi
 if test "$logging" != no; then
   enabled logging || logfile="$logging"
   echo "# $0 $@" >$logfile
-  echo '===============-------------------------------============' >>$logfile
+  echo 'Begin show set ...' >>$logfile
   set >>$logfile
-  echo '===============-------------------------------============' >>$logfile
+  echo 'End show set ...' >>$logfile
 else
   logfile=/dev/null
 fi
@@ -635,8 +635,8 @@ check_lib iconv.h iconv "" && add_cflags -DHAVE_ICONV
 #   check for libupnp and friends (mandatory)
 #################################################
 if [ -n "$libupnpdir" ]; then
-  check_cflags -I$libupnpdir
-  check_ldflags -L$libupnpdir
+  check_cflags -I$libupnpdir/include
+  check_ldflags -L$libupnpdir/lib
 fi
 
 echolog "Checking for libixml ..."
