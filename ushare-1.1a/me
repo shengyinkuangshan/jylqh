@@ -7,10 +7,14 @@ $ ./configure --enable-developer --enable-debug --disable-strip --prefix=/home/d
 $ make && make install
 
 $ cd jylqh/ushare-1.1a
-$ export PKG_CONFIG_PATH=/home/dongxy/Downloads/jylqh/libupnp-1.6.6:$PKG_CONFIG_PATH
+$ export PKG_CONFIG_PATH=${PWD}/../libupnp-1.6.6:$PKG_CONFIG_PATH
 $ ./configure --enable-debug --disable-strip --disable-dlna --disable-optimize --disable-nls --prefix=${PWD}/install_ushare
 $ ./configure --enable-debug --disable-strip --disable-dlna --disable-optimize --disable-nls --prefix=${PWD}/install_ushare --with-libupnp-dir=${PWD}/../libupnp-1.6.6/install_upnp
-$ make && make install
+$ make -w
+$ make -w -n
+$ make install
+$ make clean
+$ make distclean
 
 $git commit -m 'add dlna 0.2.4 and upnp 1.6.6'
 $ git push -u origin master
