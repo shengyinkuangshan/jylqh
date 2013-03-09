@@ -10,6 +10,9 @@ $ cd jylqh/ushare-1.1a
 $ export PKG_CONFIG_PATH=${PWD}/../libupnp-1.6.6:$PKG_CONFIG_PATH
 $ ./configure --enable-debug --disable-strip --disable-dlna --disable-optimize --disable-nls --prefix=${PWD}/install_ushare
 $ ./configure --enable-debug --disable-strip --disable-dlna --disable-optimize --disable-nls --prefix=${PWD}/install_ushare --with-libupnp-dir=${PWD}/../libupnp-1.6.6/install_upnp
+
+$ make -n -w --debug=verbose
+  -p --debug --debug=verbose --debug=implicit --debug=jobs -d
 $ make -w
 $ make -w -n
 $ make install
