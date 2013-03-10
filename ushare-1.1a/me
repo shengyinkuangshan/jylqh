@@ -1,19 +1,26 @@
-ubuntu 120401
+On ubuntu 120402
+
+For dlna
+sudo apt-get install libavformat-dev
+
+For ushare
 sudo apt-get install gettext
 
 $ cd jylqh/libupnp-1.6.6
-$ ./configure --enable-debug --prefix=${PWD}/install_upnp
+$ ./configure --enable-debug --prefix=${PWD}/install_upnp 
 $ make && make install
 
 $ cd jylqh/libdlna-0.2.4
-$ ./configure --enable-developer --enable-debug --disable-strip --prefix=/home/dongxy/Downloads/libdlna-0.2.4/xdong
+$ ./configure --enable-developer --enable-debug --disable-strip --disable-optimize --prefix=${PWD}/install_dlna
+$ ./configure --enable-debug --disable-strip --disable-optimize --prefix=${PWD}/install_dlna
 $ make && make install
 
 $ cd jylqh/ushare-1.1a
 $ export PKG_CONFIG_PATH=${PWD}/../libupnp-1.6.6:$PKG_CONFIG_PATH
+$ export PKG_CONFIG_PATH=${PWD}/../libupnp-1.6.6:${PWD}/../libdlna-0.2.4:$PKG_CONFIG_PATH
 $ ./configure --enable-debug --disable-strip --disable-dlna --disable-optimize --disable-nls --prefix=${PWD}/install_ushare
 $ ./configure --enable-debug --disable-strip --disable-dlna --disable-optimize --disable-nls --prefix=${PWD}/install_ushare --with-libupnp-dir=${PWD}/../libupnp-1.6.6/install_upnp
-
+$ ./configure --enable-debug --disable-strip --enable-dlna --disable-optimize --disable-nls --prefix=${PWD}/install_ushare --with-libupnp-dir=${PWD}/../libupnp-1.6.6/install_upnp --with-libdlna-dir=${PWD}/../libdlna-0.2.4/install_dlna
 $ make -n -w --debug=verbose
   -p --debug --debug=verbose --debug=implicit --debug=jobs -d
 $ make -w
