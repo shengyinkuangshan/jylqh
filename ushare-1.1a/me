@@ -34,3 +34,6 @@ $ git push -u origin master
 
 git push origin master
 git pull origin  master
+
+$ export LD_LIBRARY_PATH=/home/dongxyc/jylqh/libupnp-1.6.6/install_upnp/lib/:$LD_LIBRARY_PATH
+$ ~/jylqh/ushare-1.1a/install_ushare/bin/ushare -v --name=dxy_ushare --interface=eth0 --content=/home/dongxyc/Pictures/mp3/ --content=/home/dongxyc/Pictures/pic/
